@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>systems.manifold</groupId>
-            <artifactId>manifold-all</artifactId>
+            <artifactId>manifold-ext-rt</artifactId>
             <version>${manifold.version}</version>
         </dependency>
         <dependency>
@@ -40,35 +40,35 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <minimizeJar>false</minimizeJar>
-                    <filters>
-                        <filter>
-                            <artifact>huh.stuff:Function</artifact>
-                            <includes>
-                                <include>huh/stuff/**</include>
-                            </includes>
-                        </filter>
-                    </filters>
-                    <relocations>
-                        <relocation>
-                            <pattern>huh.stuff</pattern>
-                            <shadedPattern>huh.stuff</shadedPattern>
-                        </relocation>
-                    </relocations>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-shade-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>shade</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <minimizeJar>false</minimizeJar>-->
+<!--                    <filters>-->
+<!--                        <filter>-->
+<!--                            <artifact>huh.stuff:Function</artifact>-->
+<!--                            <includes>-->
+<!--                                <include>huh/stuff/**</include>-->
+<!--                            </includes>-->
+<!--                        </filter>-->
+<!--                    </filters>-->
+<!--                    <relocations>-->
+<!--                        <relocation>-->
+<!--                            <pattern>huh.stuff</pattern>-->
+<!--                            <shadedPattern>huh.stuff</shadedPattern>-->
+<!--                        </relocation>-->
+<!--                    </relocations>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -83,7 +83,7 @@
                     <annotationProcessorPaths>
                         <path>
                             <groupId>systems.manifold</groupId>
-                            <artifactId>manifold-all</artifactId>
+                            <artifactId>manifold-ext</artifactId>
                             <version>${manifold.version}</version>
                         </path>
                     </annotationProcessorPaths>

@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Extension</artifactId>
+    <artifactId>UberJar</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -31,48 +31,63 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>huh.stuff</groupId>
+            <artifactId>Extension</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
             <version>${maven.jar.version}</version>
         </dependency>
-<!--        <dependency>
+        <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
             <version>3.1.0</version>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-shade-plugin</artifactId>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>shade</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <minimizeJar>false</minimizeJar>-->
-<!--                    <filters>-->
-<!--                        <filter>-->
-<!--                            <artifact>huh.stuff:Function</artifact>-->
-<!--                            <includes>-->
-<!--                                <include>huh/stuff/**</include>-->
-<!--                            </includes>-->
-<!--                        </filter>-->
-<!--                    </filters>-->
-<!--                    <relocations>-->
-<!--                        <relocation>-->
-<!--                            <pattern>huh.stuff</pattern>-->
-<!--                            <shadedPattern>huh.stuff</shadedPattern>-->
-<!--                        </relocation>-->
-<!--                    </relocations>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                    <filters>
+                        <filter>
+                            <artifact>huh.stuff:Function</artifact>
+                            <includes>
+                                <include>huh/stuff/**</include>
+                            </includes>
+                        </filter>
+                        <filter>
+                            <artifact>huh.stuff:Extension</artifact>
+                            <includes>
+                                <include>huh/stuff/**</include>
+                            </includes>
+                        </filter>
+                    </filters>
+                    <relocations>
+                        <relocation>
+                            <pattern>huh.stuff</pattern>
+                            <shadedPattern>huh.stuff</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>extensions</pattern>
+                            <shadedPattern>extensions</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

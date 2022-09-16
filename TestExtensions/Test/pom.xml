@@ -4,17 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>huh.stuff</groupId>
+    <parent>
+        <groupId>huh.stuff</groupId>
+        <artifactId>TestExtensions</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>Test</artifactId>
-    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <manifold.version>2022.1.19</manifold.version>
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
         <junit.platform.version>1.9.0</junit.platform.version>
         <jacoco.version>0.8.2</jacoco.version>
-        <jmh.version>1.35</jmh.version>
     </properties>
 
     <dependencies>
@@ -22,6 +26,11 @@
             <groupId>huh.stuff</groupId>
             <artifactId>Extension</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>systems.manifold</groupId>
+            <artifactId>manifold-ext-rt</artifactId>
+            <version>${manifold.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -35,16 +44,6 @@
             <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-core</artifactId>
-            <version>${jmh.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjdk.jmh</groupId>
-            <artifactId>jmh-generator-annprocess</artifactId>
-            <version>${jmh.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -55,39 +54,19 @@
                 <version>3.8.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <!-- Configure manifold plugin-->
+                        <arg>-Xplugin:Manifold no-bootstrap</arg>
+                    </compilerArgs>
                     <!-- Add the processor path for the plugin -->
                     <annotationProcessorPaths>
                         <path>
-                            <groupId>org.openjdk.jmh</groupId>
-                            <artifactId>jmh-generator-annprocess</artifactId>
-                            <version>${jmh.version}</version>
+                            <groupId>systems.manifold</groupId>
+                            <artifactId>manifold-ext</artifactId>
+                            <version>${manifold.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>run-benchmarks</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <classpathScope>test</classpathScope>
-                            <executable>java</executable>
-                            <arguments>
-                                <argument>-classpath</argument>
-                                <classpath />
-                                <argument>org.openjdk.jmh.Main</argument>
-                                <argument>.*</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
